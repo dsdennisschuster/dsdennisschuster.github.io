@@ -1,411 +1,530 @@
-<!DOCTYPE html>
-<html lang="de">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dennis Schuster – Interaktiver Lebenslauf / Interactive CV</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dennis Schuster - Systems Architect and Engineering Leader for software-defined vehicles, embedded systems, connectivity, and technical delivery.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0f2942">
+  <title>Dennis Schuster | Systems Architect & Engineering Leader</title>
   <style>
     :root {
-      --primary: #1e3a5f;
-      --primary-light: #2c5282;
-      --accent: #0284c7;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #1e293b;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --tag-bg: #e0f2fe;
-      --tag-text: #0369a1;
+      --ink: #142432;
+      --muted: #526676;
+      --paper: #f5f8fa;
+      --surface: #ffffff;
+      --surface-2: #eaf0f4;
+      --line: #d4dfe6;
+      --navy: #0f2942;
+      --blue: #215f82;
+      --teal: #2c7a7b;
+      --accent: #c56845;
+      --shadow: 0 16px 45px rgba(15, 41, 66, .10);
+      --radius: 22px;
+      --max: 1180px;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    html[data-theme="dark"] {
+      --ink: #eaf2f7;
+      --muted: #afc0cd;
+      --paper: #0c1720;
+      --surface: #13232e;
+      --surface-2: #1b303d;
+      --line: #2c4452;
+      --navy: #d9eaf5;
+      --blue: #73b8dc;
+      --teal: #68c7c1;
+      --accent: #f0a37e;
+      --shadow: 0 16px 45px rgba(0, 0, 0, .26);
     }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      padding-bottom: 4rem;
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1.25rem;
+    button, summary, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+    .skip-link {
+      position: fixed; top: 12px; left: 12px; z-index: 100;
+      transform: translateY(-140%); padding: 10px 14px; border-radius: 9px;
+      color: white; background: #0f2942; font-weight: 800;
     }
-
-    /* Top Bar */
-    .topbar {
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 0.75rem 0;
+    .skip-link:focus { transform: translateY(0); }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .container { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+    .site-header {
+      position: sticky; top: 0; z-index: 40;
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+      background: color-mix(in srgb, var(--paper) 90%, transparent);
+      backdrop-filter: blur(18px);
     }
-
-    .topbar-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+    .nav-shell { min-height: 72px; display: flex; align-items: center; gap: 22px; }
+    .brand { margin-right: auto; text-decoration: none; line-height: 1.1; }
+    .brand strong { display: block; font-size: 1rem; letter-spacing: -.01em; }
+    .brand span { display: block; margin-top: 5px; color: var(--muted); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a { padding: 9px 10px; border-radius: 9px; text-decoration: none; color: var(--muted); font-size: .88rem; font-weight: 720; }
+    .nav-links a:hover { color: var(--ink); background: var(--surface-2); }
+    .controls { display: flex; align-items: center; gap: 8px; }
+    .control, .pdf-button {
+      min-height: 42px; border: 1px solid var(--line); border-radius: 12px;
+      background: var(--surface); color: var(--ink); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-weight: 800; font-size: .86rem;
     }
-
-    .brand {
-      font-weight: 700;
-      color: var(--primary);
-      font-size: 1.05rem;
+    .control { min-width: 42px; padding: 0 10px; }
+    .pdf-button { padding: 0 14px; border-color: var(--navy); background: var(--navy); color: var(--paper); }
+    html[data-theme="dark"] .pdf-button { background: #d9eaf5; color: #0f2942; }
+    .lang-switch { display: flex; border: 1px solid var(--line); padding: 3px; border-radius: 12px; background: var(--surface); }
+    .lang-switch button { min-height: 34px; min-width: 38px; border: 0; border-radius: 8px; color: var(--muted); background: transparent; cursor: pointer; font-size: .78rem; font-weight: 850; }
+    .lang-switch button[aria-pressed="true"] { color: white; background: var(--blue); }
+    .mobile-menu { display: none; }
+    main { overflow: clip; }
+    .hero { position: relative; padding: 84px 0 76px; }
+    .hero::before {
+      content: ""; position: absolute; inset: -180px auto auto 47%; width: 760px; height: 760px;
+      border-radius: 50%; z-index: -1;
+      background: radial-gradient(circle, color-mix(in srgb, var(--blue) 18%, transparent), transparent 67%);
     }
-
-    .controls {
-      display: flex;
-      gap: 0.5rem;
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: clamp(44px, 7vw, 90px); align-items: center; }
+    .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; color: var(--blue); font-size: .76rem; font-weight: 900; letter-spacing: .17em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 42px; height: 2px; background: var(--accent); }
+    h1 { max-width: 830px; margin: 0; color: var(--navy); font-size: clamp(3rem, 6.4vw, 6.2rem); letter-spacing: -.065em; line-height: .94; }
+    .headline { max-width: 700px; margin: 26px 0 0; color: var(--blue); font-size: clamp(1.35rem, 2.3vw, 2rem); font-weight: 770; line-height: 1.22; letter-spacing: -.025em; }
+    .lede { max-width: 700px; margin: 24px 0 0; color: var(--muted); font-size: 1.08rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .primary-link, .secondary-link { display: inline-flex; min-height: 48px; align-items: center; gap: 8px; padding: 0 18px; border-radius: 13px; text-decoration: none; font-weight: 850; }
+    .primary-link { color: white; background: var(--blue); }
+    .secondary-link { border: 1px solid var(--line); background: var(--surface); }
+    .portrait-wrap { position: relative; }
+    .portrait-frame { position: relative; overflow: hidden; aspect-ratio: 1 / 1.08; border-radius: 46% 46% 26px 26px; box-shadow: var(--shadow); background: var(--surface-2); }
+    .portrait-frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
+    .portrait-note { position: absolute; right: -18px; bottom: 24px; width: 184px; padding: 16px; border: 1px solid color-mix(in srgb, var(--line) 70%, transparent); border-radius: 16px; background: color-mix(in srgb, var(--surface) 92%, transparent); box-shadow: var(--shadow); backdrop-filter: blur(12px); }
+    .portrait-note strong { display: block; color: var(--navy); font-size: 1.35rem; line-height: 1; }
+    .portrait-note span { display: block; margin-top: 7px; color: var(--muted); font-size: .78rem; line-height: 1.3; }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 0 0 80px; }
+    .metric { min-height: 128px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
+    .metric strong { display: block; color: var(--navy); font-size: 1.85rem; line-height: 1; }
+    .metric span { display: block; margin-top: 12px; color: var(--muted); font-size: .88rem; line-height: 1.4; }
+    .section { padding: 90px 0; }
+    .section.alt { border-block: 1px solid var(--line); background: var(--surface); }
+    .section-head { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(0, 1.28fr); gap: 50px; align-items: start; margin-bottom: 48px; }
+    .kicker { margin: 0 0 11px; color: var(--accent); font-size: .72rem; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+    h2 { margin: 0; color: var(--navy); font-size: clamp(2rem, 4vw, 3.45rem); letter-spacing: -.045em; line-height: 1.02; }
+    .section-intro { max-width: 680px; margin: 2px 0 0; color: var(--muted); font-size: 1.06rem; }
+    .profile-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; }
+    .narrative, .journey { padding: clamp(26px, 4vw, 44px); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .narrative p:first-child { margin-top: 0; }
+    .narrative p:last-child { margin-bottom: 0; }
+    .journey { background: var(--navy); color: var(--paper); }
+    html[data-theme="dark"] .journey { background: #d9eaf5; color: #0f2942; }
+    .journey h3 { margin: 0 0 22px; font-size: 1rem; letter-spacing: .08em; text-transform: uppercase; }
+    .journey ol { margin: 0; padding: 0; list-style: none; counter-reset: journey; }
+    .journey li { position: relative; display: grid; grid-template-columns: 32px 1fr; gap: 12px; padding: 10px 0; align-items: center; font-size: .9rem; }
+    .journey li::before { counter-increment: journey; content: counter(journey); display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); border-radius: 50%; font-size: .7rem; font-weight: 900; }
+    .timeline-toolbar { display: flex; justify-content: flex-end; margin: -24px 0 24px; }
+    .view-toggle { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+    .view-toggle button { border: 0; border-radius: 8px; padding: 8px 12px; color: var(--muted); background: transparent; cursor: pointer; font-size: .78rem; font-weight: 850; }
+    .view-toggle button[aria-pressed="true"] { color: white; background: var(--blue); }
+    .timeline { position: relative; max-width: 940px; margin-inline: auto; }
+    .timeline::before { content: ""; position: absolute; top: 20px; bottom: 20px; left: 156px; width: 1px; background: var(--line); }
+    .role { display: grid; grid-template-columns: 126px minmax(0, 1fr); gap: 62px; position: relative; margin: 0 0 18px; }
+    .role::before { content: ""; position: absolute; top: 31px; left: 150px; width: 13px; height: 13px; border: 3px solid var(--paper); border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .role-time { padding-top: 26px; color: var(--muted); font-size: .79rem; font-weight: 850; text-align: right; letter-spacing: .02em; }
+    .role details { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: 0 10px 25px rgba(15,41,66,.04); }
+    .role summary { position: relative; padding: 23px 60px 22px 24px; cursor: pointer; list-style: none; }
+    .role summary::-webkit-details-marker { display: none; }
+    .role summary::after { content: "+"; position: absolute; top: 24px; right: 24px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: var(--blue); background: var(--surface-2); font-size: 1.15rem; font-weight: 500; }
+    .role details[open] summary::after { content: "−"; }
+    .role h3 { margin: 0; color: var(--navy); font-size: 1.22rem; letter-spacing: -.015em; }
+    .company { display: block; margin-top: 5px; color: var(--blue); font-size: .86rem; font-weight: 800; }
+    .role-body { padding: 0 24px 24px; border-top: 1px solid var(--line); }
+    .mission { margin: 18px 0 12px; color: var(--ink); font-weight: 720; }
+    .role-body ul { margin: 0; padding-left: 18px; color: var(--muted); }
+    .role-body li + li { margin-top: 7px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+    .tag { padding: 6px 9px; border-radius: 999px; color: var(--blue); background: var(--surface-2); font-size: .72rem; font-weight: 800; }
+    .skill-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .skill-card { padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+    .skill-index { display: grid; place-items: center; width: 38px; height: 38px; margin-bottom: 24px; border-radius: 12px; color: white; background: var(--blue); font-size: .75rem; font-weight: 900; }
+    .skill-card h3 { margin: 0 0 18px; color: var(--navy); font-size: 1.2rem; }
+    .skill-card ul { margin: 0; padding: 0; list-style: none; }
+    .skill-card li { padding: 10px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+    .achievement-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .achievement { position: relative; min-height: 230px; overflow: hidden; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .achievement::after { content: attr(data-number); position: absolute; right: 18px; bottom: -28px; color: color-mix(in srgb, var(--blue) 8%, transparent); font-size: 8rem; font-weight: 950; line-height: 1; }
+    .achievement h3, .achievement p { position: relative; z-index: 1; }
+    .achievement h3 { max-width: 520px; margin: 0 0 14px; color: var(--navy); font-size: 1.28rem; line-height: 1.25; }
+    .achievement p { max-width: 560px; margin: 0; color: var(--muted); }
+    .education-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .edu { padding: 30px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .degree { margin: 0; color: var(--navy); font-size: 1.35rem; font-weight: 850; line-height: 1.25; }
+    .field { margin: 9px 0 0; color: var(--blue); font-weight: 780; }
+    .school { margin: 16px 0 0; color: var(--muted); }
+    .qualities { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+    .quality { padding: 10px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--paper); font-size: .82rem; font-weight: 740; }
+    .closing { padding: 72px 0; }
+    .closing-card { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 30px; padding: clamp(32px, 5vw, 58px); border-radius: 28px; color: white; background: linear-gradient(135deg, #0f2942, #215f82); box-shadow: var(--shadow); }
+    .closing-card h2 { max-width: 760px; color: white; }
+    .closing-card p { max-width: 700px; margin: 16px 0 0; color: rgba(255,255,255,.76); }
+    .closing-card .pdf-button { min-height: 50px; border-color: rgba(255,255,255,.22); color: #0f2942; background: white; white-space: nowrap; }
+    footer { padding: 30px 0 42px; border-top: 1px solid var(--line); }
+    .footer-grid { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: .8rem; }
+    .footer-name { color: var(--ink); font-weight: 850; }
+    .privacy { display: flex; align-items: center; gap: 8px; }
+    .privacy::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); }
+    [data-lang] { display: none !important; }
+    html[lang="en"] [data-lang="en"], html[lang="de"] [data-lang="de"] { display: revert !important; }
+    .print-summary { display: none; }
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .hero .reveal, .metrics .reveal { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
     }
-
-    .btn {
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--text);
-      padding: 0.4rem 0.85rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.875rem;
-      font-weight: 600;
-      transition: all 0.2s;
+    @media (max-width: 1000px) {
+      .nav-links { display: none; }
+      .mobile-menu { display: inline-flex; }
+      .hero-grid { grid-template-columns: 1.15fr .85fr; gap: 40px; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .skill-groups { grid-template-columns: 1fr; }
     }
-
-    .btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+    @media (max-width: 760px) {
+      .container { width: min(calc(100% - 28px), var(--max)); }
+      .site-header .pdf-button, .site-header .theme-label { display: none; }
+      .brand span { display: none; }
+      .hero { padding: 54px 0 50px; }
+      .hero-grid, .section-head, .profile-grid, .education-grid, .closing-card { grid-template-columns: 1fr; }
+      .portrait-wrap { max-width: 390px; margin: 12px auto 0; }
+      .portrait-note { right: -4px; }
+      .metrics { gap: 10px; padding-bottom: 58px; }
+      .metric { padding: 20px; }
+      .section { padding: 68px 0; }
+      .section-head { gap: 20px; margin-bottom: 36px; }
+      .timeline-toolbar { margin-top: -10px; }
+      .timeline::before { left: 8px; }
+      .role { grid-template-columns: 1fr; gap: 8px; padding-left: 30px; }
+      .role::before { left: 2px; top: 53px; }
+      .role-time { padding-top: 0; text-align: left; }
+      .achievement-grid { grid-template-columns: 1fr; }
+      .closing-card .pdf-button { justify-self: start; }
+      .footer-grid { align-items: flex-start; flex-direction: column; }
     }
-
-    .btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
+    @media (max-width: 430px) {
+      .nav-shell { gap: 8px; }
+      .controls { gap: 5px; }
+      .lang-switch button { min-width: 32px; }
+      .mobile-menu { display: none; }
+      h1 { font-size: 3rem; }
+      .metrics { grid-template-columns: 1fr; }
+      .portrait-note { position: static; width: 100%; margin-top: 12px; }
+      .timeline-toolbar { justify-content: flex-start; }
     }
-
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-      color: #fff;
-      padding: 3rem 0 2.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .hero h1 {
-      font-size: 2.25rem;
-      margin-bottom: 0.35rem;
-      letter-spacing: -0.02em;
-    }
-
-    .hero .subtitle {
-      font-size: 1.15rem;
-      color: #bae6fd;
-      font-weight: 500;
-      margin-bottom: 1.25rem;
-    }
-
-    .hero-summary {
-      max-width: 780px;
-      font-size: 0.98rem;
-      color: #f1f5f9;
-      margin-bottom: 1.5rem;
-    }
-
-    .contact-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem 1.75rem;
-      font-size: 0.9rem;
-      color: #e2e8f0;
-    }
-
-    .contact-bar a {
-      color: #fff;
-      text-decoration: none;
-      border-bottom: 1px dotted rgba(255,255,255,0.6);
-    }
-
-    .contact-bar a:hover {
-      border-bottom-style: solid;
-    }
-
-    /* Filter Section */
-    .section-title {
-      font-size: 1.35rem;
-      color: var(--primary);
-      margin-bottom: 1rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.75rem;
-    }
-
-    .filter-btn {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 0.45rem 0.9rem;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .filter-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .filter-btn.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    /* Timeline & Cards */
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--primary);
-      border-radius: 8px;
-      padding: 1.35rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      transition: opacity 0.25s, transform 0.25s, border-color 0.25s;
-    }
-
-    .card.dimmed {
-      opacity: 0.35;
-    }
-
-    .card.highlighted {
-      border-left-color: var(--accent);
-      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.1);
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .role-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .company {
-      font-weight: 600;
-      color: var(--text);
-      font-size: 0.95rem;
-    }
-
-    .period {
-      background: #f1f5f9;
-      color: var(--muted);
-      padding: 0.2rem 0.65rem;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin: 0.65rem 0 0.9rem;
-    }
-
-    .tag {
-      background: var(--tag-bg);
-      color: var(--tag-text);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-    }
-
-    .card-bullets {
-      margin-left: 1.2rem;
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .card-bullets li {
-      margin-bottom: 0.3rem;
-    }
-
-    /* Accordion */
-    .accordion-toggle {
-      background: none;
-      border: none;
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 0.88rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.25rem 0;
-    }
-
-    .accordion-toggle:hover {
-      text-decoration: underline;
-    }
-
-    .accordion-content {
-      display: none;
-      margin-top: 0.75rem;
-      padding-top: 0.75rem;
-      border-top: 1px dashed var(--border);
-      font-size: 0.92rem;
-      color: #334155;
-      background: #f8fafc;
-      padding: 0.85rem;
-      border-radius: 6px;
-    }
-
-    .accordion-content.open {
-      display: block;
-    }
-
-    /* Grid for Education & Highlights */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .edu-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.25rem;
-    }
-
-    .edu-card h3 {
-      font-size: 1.05rem;
-      color: var(--primary);
-      margin-bottom: 0.25rem;
-    }
-
-    .edu-meta {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-
-    .skills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .skill-pill {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      font-size: 0.88rem;
-      font-weight: 500;
-    }
-
-    /* Print Styles */
+    @page { size: A4; margin: 11mm 12mm; }
     @media print {
-      .topbar, .filter-bar, .accordion-toggle {
-        display: none !important;
-      }
-      .accordion-content {
-        display: block !important;
-        border: none;
-        background: none;
-        padding: 0.4rem 0 0 0;
-      }
-      .card {
-        break-inside: avoid;
-        box-shadow: none;
-        border: 1px solid #ccc;
-      }
-      .hero {
-        background: #1e3a5f !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
+      :root { --ink: #162734; --muted: #4f6472; --navy: #0f2942; --blue: #215f82; --line: #d7e0e5; }
+      html, body { background: white !important; color: var(--ink) !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      body > *:not(.print-summary) { display: none !important; }
+      .print-summary { display: block !important; font-family: Arial, Helvetica, sans-serif; font-size: 9.5pt; line-height: 1.42; }
+      .print-page { position: relative; min-height: 273mm; break-after: page; }
+      .print-page:last-child { break-after: auto; }
+      .print-top { display: grid; grid-template-columns: 33mm 1fr; gap: 8mm; align-items: center; padding-bottom: 7mm; border-bottom: 2px solid #215f82; }
+      .print-photo { width: 33mm; height: 33mm; border-radius: 50%; object-fit: cover; }
+      .print-top h1 { margin: 0; color: #0f2942; font-size: 27pt; letter-spacing: -1.1pt; line-height: .95; }
+      .print-top .print-title { margin: 2mm 0 0; color: #215f82; font-size: 12pt; font-weight: 700; }
+      .print-top .print-tagline { margin: 1.5mm 0 0; color: #4f6472; font-size: 8.5pt; }
+      .print-section { margin-top: 7mm; }
+      .print-section h2 { margin: 0 0 2.5mm; padding-bottom: 1.5mm; border-bottom: 1px solid #d7e0e5; color: #0f2942; font-size: 13pt; letter-spacing: -.2pt; }
+      .print-summary p { margin: 0; }
+      .print-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2mm; margin-top: 6mm; }
+      .print-metric { padding: 3.5mm; border-radius: 2mm; background: #edf3f6; }
+      .print-metric strong { display: block; color: #0f2942; font-size: 13pt; line-height: 1; }
+      .print-metric span { display: block; margin-top: 1mm; color: #4f6472; font-size: 7.5pt; line-height: 1.2; }
+      .print-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+      .print-list { margin: 0; padding-left: 4mm; }
+      .print-list li + li { margin-top: 1.4mm; }
+      .print-role { display: grid; grid-template-columns: 27mm 1fr; gap: 4mm; padding: 3.2mm 0; border-bottom: 1px solid #e3e9ed; break-inside: avoid; }
+      .print-period { color: #215f82; font-size: 8pt; font-weight: 700; }
+      .print-role h3 { margin: 0; color: #0f2942; font-size: 9.5pt; }
+      .print-role p { margin-top: .7mm; color: #4f6472; font-size: 8pt; }
+      .print-tags { display: flex; flex-wrap: wrap; gap: 1.5mm; }
+      html[lang="en"] .print-tags[data-lang="en"], html[lang="de"] .print-tags[data-lang="de"] { display: flex !important; }
+      .print-tag { padding: 1.3mm 2mm; border-radius: 99px; background: #edf3f6; color: #215f82; font-size: 7.5pt; font-weight: 700; }
+      .print-achievements { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+      .print-achievement { padding: 3.5mm; border-left: 2px solid #c56845; background: #f6f8fa; break-inside: avoid; }
+      .print-achievement strong { display: block; color: #0f2942; font-size: 8.5pt; }
+      .print-achievement span { display: block; margin-top: 1mm; color: #4f6472; font-size: 7.8pt; }
+      html[lang="en"] .print-achievement [data-lang="en"], html[lang="de"] .print-achievement [data-lang="de"] { display: block !important; }
+      .print-edu { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+      .print-edu > div { padding: 3mm; border: 1px solid #d7e0e5; border-radius: 2mm; }
+      .print-edu strong { display: block; color: #0f2942; }
+      .print-edu span { display: block; margin-top: 1mm; color: #4f6472; }
+      .print-foot { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; padding-top: 2mm; border-top: 1px solid #d7e0e5; color: #6c7d88; font-size: 7pt; }
     }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main"><span data-lang="en">Skip to content</span><span data-lang="de">Zum Inhalt</span></a>
 
-  <!-- Top Navigation -->
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">Dennis Schuster | CV</div>
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="#top" aria-label="Dennis Schuster">
+        <strong>Dennis Schuster</strong>
+        <span data-lang="en">Systems & Engineering</span><span data-lang="de">Systeme & Engineering</span>
+      </a>
+      <nav class="nav-links" aria-label="Navigation">
+        <a href="#profile"><span data-lang="en">Profile</span><span data-lang="de">Profil</span></a>
+        <a href="#experience"><span data-lang="en">Experience</span><span data-lang="de">Erfahrung</span></a>
+        <a href="#expertise"><span data-lang="en">Expertise</span><span data-lang="de">Expertise</span></a>
+        <a href="#achievements"><span data-lang="en">Achievements</span><span data-lang="de">Erfolge</span></a>
+        <a href="#education"><span data-lang="en">Education</span><span data-lang="de">Ausbildung</span></a>
+      </nav>
       <div class="controls">
-        <button class="btn active" id="btn-de" onclick="setLang('de')">DE</button>
-        <button class="btn" id="btn-en" onclick="setLang('en')">EN</button>
-        <button class="btn" onclick="window.print()" data-i18n="printBtn">PDF / Drucken</button>
+        <div class="lang-switch" role="group" aria-label="Language / Sprache">
+          <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-set-lang="de" aria-pressed="false">DE</button>
+        </div>
+        <button class="control" id="themeToggle" type="button" aria-label="Color theme / Farbschema"><span aria-hidden="true">◐</span><span class="theme-label" data-lang="en">Theme</span><span class="theme-label" data-lang="de">Design</span></button>
+        <button class="pdf-button" type="button" data-print><span aria-hidden="true">↓</span><span data-lang="en">PDF summary</span><span data-lang="de">PDF-Kurzprofil</span></button>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <h1>Dennis Schuster</h1>
-      <div class="subtitle" data-i18n="heroSubtitle">
-        Systems Designer (SDV) • Agile Release Train Product Owner • Team & Project Lead
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow"><span data-lang="en">Automotive systems · software · leadership</span><span data-lang="de">Automotive Systeme · Software · Führung</span></p>
+          <h1>Dennis<br>Schuster</h1>
+          <p class="headline" data-lang="en">Systems Architect & Engineering Leader</p>
+          <p class="headline" data-lang="de">Systemarchitekt & Engineering-Führungskraft</p>
+          <p class="lede" data-lang="en">I connect embedded engineering depth with system architecture, technical delivery, and agile leadership - from ECU software to software-defined vehicle platforms.</p>
+          <p class="lede" data-lang="de">Ich verbinde Embedded-Engineering-Tiefe mit Systemarchitektur, technischer Umsetzung und agiler Führung - von Steuergeräte-Software bis zur Software-Defined-Vehicle-Plattform.</p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#experience"><span data-lang="en">Explore experience</span><span data-lang="de">Erfahrung ansehen</span><span aria-hidden="true">↓</span></a>
+            <button class="secondary-link" type="button" data-print><span data-lang="en">Create PDF summary</span><span data-lang="de">PDF-Kurzprofil erstellen</span><span aria-hidden="true">↗</span></button>
+          </div>
+        </div>
+        <div class="portrait-wrap reveal">
+          <div class="portrait-frame"><img src="assets/portrait.jpg" width="900" height="900" alt="Dennis Schuster"></div>
+          <div class="portrait-note"><strong>17+</strong><span data-lang="en">years across automotive software, systems, and technical leadership</span><span data-lang="de">Jahre in Automotive Software, Systemen und technischer Führung</span></div>
+        </div>
       </div>
-      <p class="hero-summary" data-i18n="heroSummary">
-        Erfahrener Software- und Systementwickler sowie Führungskraft mit über 17 Jahren Expertise in der Automobil- und Nutzfahrzeugbranche – vom Embedded-Steuergerät (V-Modell) bis zur agilen Software-Defined-Vehicle-Architektur und globalen SAFe-Transformationen.
-      </p>
-      <div class="contact-bar">
-        <span>📍 <span data-i18n="location">Ebersbach an der Fils (Raum Stuttgart), Deutschland</span></span>
+    </section>
+
+    <div class="container metrics" aria-label="Career highlights">
+      <div class="metric reveal"><strong>17+</strong><span data-lang="en">years in automotive engineering</span><span data-lang="de">Jahre Automotive Engineering</span></div>
+      <div class="metric reveal"><strong>40+</strong><span data-lang="en">people in an agile connectivity setup</span><span data-lang="de">Personen im agilen Connectivity-Setup</span></div>
+      <div class="metric reveal"><strong>360°</strong><span data-lang="en">hardware, software, diagnostics, cyber security & testing</span><span data-lang="de">Hardware, Software, Diagnose, Cyber Security & Test</span></div>
+      <div class="metric reveal"><strong>Global</strong><span data-lang="en">cross-functional engineering collaboration</span><span data-lang="de">funktionsübergreifende Engineering-Zusammenarbeit</span></div>
+    </div>
+
+    <section class="section alt" id="profile">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><p class="kicker" data-lang="en">Professional profile</p><p class="kicker" data-lang="de">Berufliches Profil</p><h2 data-lang="en">Engineering the whole system.</h2><h2 data-lang="de">Das Gesamtsystem im Blick.</h2></div>
+          <p class="section-intro" data-lang="en">A career built by widening the lens: from code and controllers to complete platforms, delivery organizations, and vehicle-level architecture.</p>
+          <p class="section-intro" data-lang="de">Eine Laufbahn mit stetig erweitertem Blickwinkel: vom Code und Steuergerät über komplette Plattformen und Delivery-Organisationen bis zur Fahrzeugarchitektur.</p>
+        </div>
+        <div class="profile-grid">
+          <div class="narrative reveal">
+            <div data-lang="en">
+              <p>I am an automotive engineering professional with deep roots in embedded software and a track record of growing into system architecture, project leadership, and agile product ownership.</p>
+              <p>My work spans diagnostic systems, powertrain controllers, global software releases, telematics platforms, vehicle connectivity, and software-defined vehicle architecture. I translate complex customer and vehicle needs into technically viable priorities and align hardware, software, diagnostics, cyber security, testing, suppliers, and stakeholders around delivery.</p>
+              <p>My leadership style combines technical clarity, structured execution, direct communication, and active involvement of the people doing the work.</p>
+            </div>
+            <div data-lang="de">
+              <p>Ich bin Automotive-Engineering-Experte mit tiefen Wurzeln in der Embedded-Software und einer konsequenten Entwicklung hin zu Systemarchitektur, Projektleitung und agilem Product Ownership.</p>
+              <p>Meine Erfahrung reicht von Diagnosesystemen und Powertrain-Steuergeräten über globales Software Release Management und Telematikplattformen bis zu Vehicle Connectivity und Software-Defined-Vehicle-Architektur. Ich übersetze komplexe Kunden- und Fahrzeuganforderungen in technisch umsetzbare Prioritäten und richte Hardware, Software, Diagnose, Cyber Security, Test, Lieferanten und Stakeholder auf die Umsetzung aus.</p>
+              <p>Mein Führungsstil verbindet technische Klarheit, strukturierte Umsetzung, direkte Kommunikation und die aktive Einbindung der Menschen, die das Produkt entwickeln.</p>
+            </div>
+          </div>
+          <div class="journey reveal">
+            <h3 data-lang="en">Career progression</h3><h3 data-lang="de">Entwicklungspfad</h3>
+            <ol data-lang="en"><li>Diagnostic software</li><li>Embedded powertrain software</li><li>Technical ECU project leadership</li><li>Global release management</li><li>Telematics platform leadership</li><li>Agile product ownership</li><li>Vehicle systems architecture</li></ol>
+            <ol data-lang="de"><li>Diagnose-Software</li><li>Embedded Powertrain Software</li><li>Technische ECU-Projektleitung</li><li>Globales Release Management</li><li>Telematik-Plattformleitung</li><li>Agiles Product Ownership</li><li>Fahrzeugsystemarchitektur</li></ol>
+          </div>
+        </div>
       </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><p class="kicker" data-lang="en">Professional experience</p><p class="kicker" data-lang="de">Berufserfahrung</p><h2 data-lang="en">From implementation to architecture.</h2><h2 data-lang="de">Von der Implementierung zur Architektur.</h2></div>
+          <p class="section-intro" data-lang="en">Each role added a new layer of responsibility while preserving a hands-on understanding of how complex automotive systems are engineered and delivered.</p>
+          <p class="section-intro" data-lang="de">Jede Rolle ergänzte eine neue Verantwortungsebene - bei gleichzeitig praxisnaher Sicht darauf, wie komplexe Automotive-Systeme entwickelt und ausgeliefert werden.</p>
+        </div>
+        <div class="timeline-toolbar">
+          <div class="view-toggle" role="group" aria-label="Detail level / Detailgrad">
+            <button type="button" data-view="concise" aria-pressed="false"><span data-lang="en">Concise</span><span data-lang="de">Kompakt</span></button>
+            <button type="button" data-view="expanded" aria-pressed="true"><span data-lang="en">Expanded</span><span data-lang="de">Erweitert</span></button>
+          </div>
+        </div>
+        <div class="timeline">
+          <article class="role reveal"><div class="role-time"><span data-lang="en">Nov 2025 - Present</span><span data-lang="de">Nov. 2025 - heute</span></div><div><details open><summary><h3 data-lang="en">Systems Designer, Vehicle Systems Engineering</h3><h3 data-lang="de">Systems Designer, Vehicle Systems Engineering</h3><span class="company">Daimler Truck AG</span></summary><div class="role-body"><p class="mission" data-lang="en">Shaping system-level architecture for the software-defined vehicle.</p><p class="mission" data-lang="de">Gestaltung der Systemarchitektur für das Software-Defined Vehicle.</p><ul data-lang="en"><li>Systems design within Vehicle Systems Engineering.</li><li>Current focus on software-defined vehicle architecture.</li></ul><ul data-lang="de"><li>Systemdesign im Vehicle Systems Engineering.</li><li>Aktueller Fokus auf Software-Defined-Vehicle-Architektur.</li></ul><div class="tags"><span class="tag">SDV</span><span class="tag">Vehicle Systems</span><span class="tag">System Architecture</span></div></div></details></div></article>
+          <article class="role reveal"><div class="role-time"><span data-lang="en">Jan 2020 - Oct 2025</span><span data-lang="de">Jan. 2020 - Okt. 2025</span></div><div><details open><summary><h3 data-lang="en">Project Lead & Agile Release Train Product Owner</h3><h3 data-lang="de">Projektleiter & Agile Release Train Product Owner</h3><span class="company">Daimler AG</span></summary><div class="role-body"><p class="mission" data-lang="en">Technical delivery and agile leadership for a next-generation telematics platform and global vehicle connectivity.</p><p class="mission" data-lang="de">Technische Umsetzung und agile Führung für eine Telematikplattform der nächsten Generation und globale Vehicle Connectivity.</p><ul data-lang="en"><li>Led platform development across hardware, software, diagnostics, cyber security, testing, and supplier management.</li><li>Led the global Vehicle Connectivity Agile Release Train as Product Owner using SAFe.</li><li>Worked as system architect for telematics systems and supported graduates and working students.</li><li>Served as interim team lead.</li></ul><ul data-lang="de"><li>Leitung der Plattformentwicklung über Hardware, Software, Diagnose, Cyber Security, Test und Lieferantenmanagement.</li><li>Führung des globalen Vehicle Connectivity Agile Release Trains als Product Owner nach SAFe.</li><li>Tätigkeit als Systemarchitekt für Telematiksysteme sowie Betreuung von Absolventen und Werkstudierenden.</li><li>Interimistische Teamleitung.</li></ul><div class="tags"><span class="tag">Telematics</span><span class="tag">SAFe</span><span class="tag">Product Ownership</span><span class="tag">Supplier Management</span></div></div></details></div></article>
+          <article class="role reveal"><div class="role-time"><span data-lang="en">Oct 2018 - Dec 2019</span><span data-lang="de">Okt. 2018 - Dez. 2019</span></div><div><details open><summary><h3 data-lang="en">Software Release Manager</h3><h3 data-lang="de">Software Release Manager</h3><span class="company">Daimler Truck AG</span></summary><div class="role-body"><p class="mission" data-lang="en">Established a global release capability for vehicle connectivity.</p><p class="mission" data-lang="de">Aufbau eines globalen Release Managements für Vehicle Connectivity.</p><ul data-lang="en"><li>Set up global software release management.</li><li>Managed requirements and specifications in DOORS Next Generation.</li><li>Acted as deputy team lead.</li></ul><ul data-lang="de"><li>Aufbau des globalen Software Release Managements.</li><li>Anforderungsmanagement und Spezifikation in DOORS Next Generation.</li><li>Stellvertretende Teamleitung.</li></ul><div class="tags"><span class="tag">Release Management</span><span class="tag">Requirements</span><span class="tag">DOORS NG</span></div></div></details></div></article>
+          <article class="role reveal"><div class="role-time"><span data-lang="en">Jan 2013 - Sep 2018</span><span data-lang="de">Jan. 2013 - Sep. 2018</span></div><div><details open><summary><h3 data-lang="en">Embedded Software Engineer & Technical Project Lead</h3><h3 data-lang="de">Embedded Software Engineer & Technischer Projektleiter</h3><span class="company">Daimler Truck AG</span></summary><div class="role-body"><p class="mission" data-lang="en">Developed embedded powertrain software and led a new controller through the complete development lifecycle.</p><p class="mission" data-lang="de">Entwicklung von Embedded Powertrain Software und technische Leitung eines neuen Steuergeräts über den vollständigen Entwicklungszyklus.</p><ul data-lang="en"><li>Embedded software, integration of MATLAB modules, and software build pipeline for powertrain controllers.</li><li>Technical project lead for a new controller from concept through production launch.</li><li>Developed a multicore concept for an OSEK-based single-core system.</li><li>Supported international testing, production systems, graduates, and working students.</li></ul><ul data-lang="de"><li>Embedded Software, Integration von MATLAB-Modulen und Software-Build-Pipeline für Powertrain-Steuergeräte.</li><li>Technische Projektleitung eines neuen Steuergeräts von der Idee bis zur Serieneinführung.</li><li>Entwicklung eines Multicore-Konzepts für ein OSEK-basiertes Singlecore-System.</li><li>Unterstützung internationaler Erprobung, von Seriensystemen, Absolventen und Werkstudierenden.</li></ul><div class="tags"><span class="tag">C</span><span class="tag">Embedded Systems</span><span class="tag">MATLAB</span><span class="tag">OSEK</span><span class="tag">Software Integration</span></div></div></details></div></article>
+          <article class="role reveal"><div class="role-time"><span data-lang="en">Jul 2008 - Dec 2012</span><span data-lang="de">Juli 2008 - Dez. 2012</span></div><div><details open><summary><h3 data-lang="en">Diagnostic Software Engineer</h3><h3 data-lang="de">Entwicklungsingenieur Diagnose-Software</h3><span class="company">Daimler Truck AG</span></summary><div class="role-body"><p class="mission" data-lang="en">Built end-of-line diagnostic solutions for automotive production.</p><p class="mission" data-lang="de">Entwicklung von End-of-Line-Diagnoselösungen für die Fahrzeugproduktion.</p><ul data-lang="en"><li>Software development for diagnostic testers in Mercedes-Benz plants, focused on gasoline engines.</li><li>Fuel leakage detection in the production process.</li><li>Commissioning of a belt-driven starter-generator.</li></ul><ul data-lang="de"><li>Softwareentwicklung für Diagnosetester in Mercedes-Benz Werken mit Schwerpunkt Ottomotoren.</li><li>Kraftstoff-Leckageerkennung im Produktionsprozess.</li><li>Inbetriebnahme eines riemengetriebenen Startergenerators.</li></ul><div class="tags"><span class="tag">Diagnostics</span><span class="tag">End-of-Line</span><span class="tag">Production</span></div></div></details></div></article>
+          <article class="role reveal"><div class="role-time"><span data-lang="en">Mar - Jun 2008</span><span data-lang="de">März - Juni 2008</span></div><div><details open><summary><h3 data-lang="en">Engineering Assignment</h3><h3 data-lang="de">Engineering-Einsatz</h3><span class="company">Bertrandt Technikum GmbH</span></summary><div class="role-body"><p class="mission" data-lang="en">Diagnostic testing for HMI and head-unit components.</p><p class="mission" data-lang="de">Diagnosetests für HMI- und Head-Unit-Komponenten.</p><ul data-lang="en"><li>Testing at an automotive development center in Weissach.</li></ul><ul data-lang="de"><li>Tests in einem automobilen Entwicklungszentrum in Weissach.</li></ul><div class="tags"><span class="tag">HMI</span><span class="tag">Head Unit</span><span class="tag">Testing</span></div></div></details></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="expertise">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><p class="kicker" data-lang="en">Expertise map</p><p class="kicker" data-lang="de">Kompetenzfelder</p><h2 data-lang="en">Depth where disciplines meet.</h2><h2 data-lang="de">Tiefe an den Schnittstellen.</h2></div>
+          <p class="section-intro" data-lang="en">Capability groups instead of arbitrary percentage scores - a practical view of the domains repeatedly applied across roles.</p>
+          <p class="section-intro" data-lang="de">Kompetenzgruppen statt willkürlicher Prozentwerte - ein praxisnaher Blick auf die über mehrere Rollen eingesetzten Fähigkeiten.</p>
+        </div>
+        <div class="skill-groups">
+          <article class="skill-card reveal"><div class="skill-index">01</div><h3 data-lang="en">Systems & software</h3><h3 data-lang="de">Systeme & Software</h3><ul data-lang="en"><li>Embedded systems & ECU software</li><li>Basis and application software</li><li>Software & network architecture</li><li>Vehicle connectivity & telematics</li><li>Software-defined vehicle architecture</li><li>Diagnostics, integration & CI/CD/CT</li></ul><ul data-lang="de"><li>Embedded Systems & ECU-Software</li><li>Basis- und Applikationssoftware</li><li>Software- & Netzwerkarchitektur</li><li>Vehicle Connectivity & Telematik</li><li>Software-Defined-Vehicle-Architektur</li><li>Diagnose, Integration & CI/CD/CT</li></ul></article>
+          <article class="skill-card reveal"><div class="skill-index">02</div><h3 data-lang="en">Engineering leadership</h3><h3 data-lang="de">Engineering Leadership</h3><ul data-lang="en"><li>Technical project leadership</li><li>Product ownership & prioritization</li><li>Team leadership & coaching</li><li>Supplier & stakeholder management</li><li>Requirements & release management</li><li>Transformation leadership</li></ul><ul data-lang="de"><li>Technische Projektleitung</li><li>Product Ownership & Priorisierung</li><li>Teamführung & Coaching</li><li>Lieferanten- & Stakeholdermanagement</li><li>Anforderungs- & Release Management</li><li>Transformationsführung</li></ul></article>
+          <article class="skill-card reveal"><div class="skill-index">03</div><h3 data-lang="en">Delivery methods</h3><h3 data-lang="de">Delivery-Methoden</h3><ul data-lang="en"><li>V-model development</li><li>Agile software development</li><li>Scaled Agile Framework</li><li>PI planning & resource alignment</li><li>Global development cooperation</li><li>Production launch & series support</li></ul><ul data-lang="de"><li>V-Modell-Entwicklung</li><li>Agile Softwareentwicklung</li><li>Scaled Agile Framework</li><li>PI Planning & Ressourcenabstimmung</li><li>Globale Entwicklungskooperation</li><li>Serieneinführung & Serienbetreuung</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="achievements">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><p class="kicker" data-lang="en">Selected achievements</p><p class="kicker" data-lang="de">Ausgewählte Erfolge</p><h2 data-lang="en">Delivery at product and organization scale.</h2><h2 data-lang="de">Umsetzung auf Produkt- und Organisationsebene.</h2></div>
+          <p class="section-intro" data-lang="en">Representative outcomes from technical development, platform delivery, and organizational transformation.</p>
+          <p class="section-intro" data-lang="de">Repräsentative Ergebnisse aus technischer Entwicklung, Plattformumsetzung und organisatorischer Transformation.</p>
+        </div>
+        <div class="achievement-grid">
+          <article class="achievement reveal" data-number="01"><h3 data-lang="en">Next-generation telematics platform</h3><h3 data-lang="de">Telematikplattform der nächsten Generation</h3><p data-lang="en">Led technical development across hardware, software, diagnostics, cyber security, testing, and supplier management, contributing to a successful production launch.</p><p data-lang="de">Leitung der technischen Entwicklung über Hardware, Software, Diagnose, Cyber Security, Test und Lieferantenmanagement mit Beitrag zum erfolgreichen Produktionsstart.</p></article>
+          <article class="achievement reveal" data-number="02"><h3 data-lang="en">Agile connectivity organization</h3><h3 data-lang="de">Agile Connectivity-Organisation</h3><p data-lang="en">Built and led a virtual agile delivery setup that involved at least 40 people in changing team configurations and mapped the software process into an agile model.</p><p data-lang="de">Aufbau und Führung eines virtuellen agilen Delivery-Setups mit mindestens 40 Personen in wechselnden Teamkonstellationen und Überführung des Softwareprozesses in ein agiles Modell.</p></article>
+          <article class="achievement reveal" data-number="03"><h3 data-lang="en">Controller from concept to series</h3><h3 data-lang="de">Steuergerät von der Idee bis zur Serie</h3><p data-lang="en">Managed technical development of a new central powertrain controller across the complete lifecycle from initial concept through production launch.</p><p data-lang="de">Technische Leitung eines neuen zentralen Powertrain-Steuergeräts über den vollständigen Entwicklungszyklus von der Idee bis zur Serieneinführung.</p></article>
+          <article class="achievement reveal" data-number="04"><h3 data-lang="en">Global release capability</h3><h3 data-lang="de">Globales Release Management</h3><p data-lang="en">Established global software release management for vehicle connectivity and linked it with structured requirements and specification work.</p><p data-lang="de">Aufbau eines globalen Software Release Managements für Vehicle Connectivity und Verknüpfung mit strukturiertem Anforderungs- und Spezifikationsmanagement.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="education">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><p class="kicker" data-lang="en">Education & qualities</p><p class="kicker" data-lang="de">Ausbildung & Stärken</p><h2 data-lang="en">Technical foundation. Business perspective.</h2><h2 data-lang="de">Technische Basis. Unternehmerische Perspektive.</h2></div>
+          <p class="section-intro" data-lang="en">Engineering education complemented by a part-time MBA and professional qualities demonstrated in complex delivery environments.</p>
+          <p class="section-intro" data-lang="de">Ingenieurwissenschaftliche Ausbildung, ergänzt durch ein berufsbegleitendes MBA-Studium und in komplexen Delivery-Umfeldern gezeigte professionelle Stärken.</p>
+        </div>
+        <div class="education-grid">
+          <article class="edu reveal"><p class="degree">Master of Business Administration</p><p class="field">International Automotive Management</p><p class="school">Hochschule Heilbronn</p></article>
+          <article class="edu reveal"><p class="degree">Diplom-Ingenieur</p><p class="field" data-lang="en">Telecommunication Engineering</p><p class="field" data-lang="de">Nachrichtentechnik</p><p class="school">Hochschule Offenburg</p></article>
+        </div>
+        <div class="qualities" aria-label="Professional qualities">
+          <span class="quality" data-lang="en">Rapid technical understanding</span><span class="quality" data-lang="de">Schnelle technische Auffassung</span>
+          <span class="quality" data-lang="en">Independent & goal-oriented delivery</span><span class="quality" data-lang="de">Selbstständige & zielorientierte Umsetzung</span>
+          <span class="quality" data-lang="en">Responsibility & initiative</span><span class="quality" data-lang="de">Verantwortung & Initiative</span>
+          <span class="quality" data-lang="en">Clear communication</span><span class="quality" data-lang="de">Klare Kommunikation</span>
+          <span class="quality" data-lang="en">Collaborative leadership</span><span class="quality" data-lang="de">Kooperative Führung</span>
+          <span class="quality" data-lang="en">Intercultural collaboration</span><span class="quality" data-lang="de">Interkulturelle Zusammenarbeit</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="container">
+        <div class="closing-card">
+          <div><h2 data-lang="en">A concise version, ready for your records.</h2><h2 data-lang="de">Das Wichtigste kompakt für Ihre Unterlagen.</h2><p data-lang="en">Open the browser print dialog to save a clean, two-page summary as PDF in the selected language.</p><p data-lang="de">Öffnen Sie den Druckdialog des Browsers, um ein kompaktes, zweiseitiges Kurzprofil in der gewählten Sprache als PDF zu speichern.</p></div>
+          <button class="pdf-button" type="button" data-print><span aria-hidden="true">↓</span><span data-lang="en">PDF summary</span><span data-lang="de">PDF-Kurzprofil</span></button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid"><div><span class="footer-name">Dennis Schuster</span> · <span data-lang="en">Systems Architect & Engineering Leader</span><span data-lang="de">Systemarchitekt & Engineering-Führungskraft</span></div><div class="privacy"><span data-lang="en">Static website · no tracking · no analytics</span><span data-lang="de">Statische Website · kein Tracking · keine Analytics</span></div></div>
+  </footer>
+
+  <div class="print-summary" aria-hidden="true">
+    <div class="print-page">
+      <div class="print-top"><img class="print-photo" src="assets/portrait.jpg" alt=""><div><h1>Dennis Schuster</h1><p class="print-title" data-lang="en">Systems Architect & Engineering Leader</p><p class="print-title" data-lang="de">Systemarchitekt & Engineering-Führungskraft</p><p class="print-tagline" data-lang="en">Automotive systems · embedded software · vehicle connectivity · technical leadership</p><p class="print-tagline" data-lang="de">Automotive Systeme · Embedded Software · Vehicle Connectivity · Technische Führung</p></div></div>
+      <section class="print-section"><h2 data-lang="en">Profile</h2><h2 data-lang="de">Profil</h2><p data-lang="en">Automotive engineering professional with deep roots in embedded software and broad experience in system architecture, technical project leadership, release management, and agile product ownership. Connects customer and vehicle needs with viable technical priorities across hardware, software, diagnostics, cyber security, testing, suppliers, and stakeholders.</p><p data-lang="de">Automotive-Engineering-Experte mit tiefen Wurzeln in Embedded Software und breiter Erfahrung in Systemarchitektur, technischer Projektleitung, Release Management und agilem Product Ownership. Verbindet Kunden- und Fahrzeuganforderungen mit technisch umsetzbaren Prioritäten über Hardware, Software, Diagnose, Cyber Security, Test, Lieferanten und Stakeholder hinweg.</p></section>
+      <div class="print-metrics"><div class="print-metric"><strong>17+</strong><span data-lang="en">years automotive engineering</span><span data-lang="de">Jahre Automotive Engineering</span></div><div class="print-metric"><strong>40+</strong><span data-lang="en">people in agile setup</span><span data-lang="de">Personen im agilen Setup</span></div><div class="print-metric"><strong>360°</strong><span data-lang="en">platform delivery scope</span><span data-lang="de">Plattform-Delivery-Scope</span></div><div class="print-metric"><strong>Global</strong><span data-lang="en">engineering collaboration</span><span data-lang="de">Engineering-Kooperation</span></div></div>
+      <section class="print-section"><h2 data-lang="en">Core expertise</h2><h2 data-lang="de">Kernkompetenzen</h2><div class="print-columns"><ul class="print-list" data-lang="en"><li>Embedded systems & ECU software</li><li>System, software & network architecture</li><li>Vehicle connectivity & telematics</li><li>Software-defined vehicle architecture</li><li>Diagnostics, integration & CI/CD/CT</li></ul><ul class="print-list" data-lang="en"><li>Technical project & team leadership</li><li>Product ownership & SAFe</li><li>Supplier & stakeholder management</li><li>Requirements & release management</li><li>Transformation & production launch</li></ul><ul class="print-list" data-lang="de"><li>Embedded Systems & ECU-Software</li><li>System-, Software- & Netzwerkarchitektur</li><li>Vehicle Connectivity & Telematik</li><li>Software-Defined-Vehicle-Architektur</li><li>Diagnose, Integration & CI/CD/CT</li></ul><ul class="print-list" data-lang="de"><li>Technische Projekt- & Teamleitung</li><li>Product Ownership & SAFe</li><li>Lieferanten- & Stakeholdermanagement</li><li>Anforderungs- & Release Management</li><li>Transformation & Serieneinführung</li></ul></div></section>
+      <section class="print-section"><h2 data-lang="en">Recent experience</h2><h2 data-lang="de">Aktuelle Erfahrung</h2><div class="print-role"><div class="print-period" data-lang="en">11/2025 - Present</div><div class="print-period" data-lang="de">11/2025 - heute</div><div><h3>Systems Designer · Daimler Truck AG</h3><p data-lang="en">Vehicle Systems Engineering with current focus on software-defined vehicle architecture.</p><p data-lang="de">Vehicle Systems Engineering mit aktuellem Fokus auf Software-Defined-Vehicle-Architektur.</p></div></div><div class="print-role"><div class="print-period">01/2020 - 10/2025</div><div><h3 data-lang="en">Project Lead & ART Product Owner · Daimler AG</h3><h3 data-lang="de">Projektleiter & ART Product Owner · Daimler AG</h3><p data-lang="en">Next-generation telematics platform, global Vehicle Connectivity ART, system architecture, and interim team leadership.</p><p data-lang="de">Telematikplattform der nächsten Generation, globaler Vehicle Connectivity ART, Systemarchitektur und interimistische Teamleitung.</p></div></div><div class="print-role"><div class="print-period">10/2018 - 12/2019</div><div><h3>Software Release Manager · Daimler Truck AG</h3><p data-lang="en">Established global software release management for vehicle connectivity.</p><p data-lang="de">Aufbau des globalen Software Release Managements für Vehicle Connectivity.</p></div></div></section>
+      <div class="print-foot"><span>Dennis Schuster · Resume summary</span><span>1 / 2</span></div>
     </div>
-  </section>
-
-  <main class="container">
-
-    <!-- Interactive Competency Filter -->
-    <h2 class="section-title" data-i18n="filterHeading">Schwerpunkte filtern</h2>
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterCards('all', this)" data-i18n="filterAll">Alle Stationen</button>
-      <button class="filter-btn" onclick="filterCards('leadership', this)" data-i18n="filterLead">Teamführung & Transformation</button>
-      <button class="filter-btn" onclick="filterCards('architecture', this)" data-i18n="filterArch">Software Architektur & SDV</button>
-      <button class="filter-btn" onclick="filterCards('agile', this)" data-i18n="filterAgile">SAFe & Agile</button>
-      <button class="filter-btn" onclick="filterCards('embedded', this)" data-i18n="filterEmb">Embedded & Powertrain</button>
+    <div class="print-page">
+      <section class="print-section" style="margin-top:0"><h2 data-lang="en">Earlier experience</h2><h2 data-lang="de">Weitere Erfahrung</h2><div class="print-role"><div class="print-period">01/2013 - 09/2018</div><div><h3 data-lang="en">Embedded Software Engineer & Technical Project Lead · Daimler Truck AG</h3><h3 data-lang="de">Embedded Software Engineer & Technischer Projektleiter · Daimler Truck AG</h3><p data-lang="en">Powertrain controller software, integration and build pipeline; led a new controller from concept through series introduction.</p><p data-lang="de">Powertrain-Steuergeräte-Software, Integration und Build-Pipeline; Leitung eines neuen Steuergeräts von der Idee bis zur Serieneinführung.</p></div></div><div class="print-role"><div class="print-period">07/2008 - 12/2012</div><div><h3 data-lang="en">Diagnostic Software Engineer · Daimler Truck AG</h3><h3 data-lang="de">Entwicklungsingenieur Diagnose-Software · Daimler Truck AG</h3><p data-lang="en">End-of-line diagnostic software for automotive production.</p><p data-lang="de">End-of-Line-Diagnosesoftware für die Fahrzeugproduktion.</p></div></div><div class="print-role"><div class="print-period">03/2008 - 06/2008</div><div><h3 data-lang="en">Engineering Assignment · Bertrandt Technikum GmbH</h3><h3 data-lang="de">Engineering-Einsatz · Bertrandt Technikum GmbH</h3><p data-lang="en">Diagnostic testing of HMI and head-unit components.</p><p data-lang="de">Diagnosetests von HMI- und Head-Unit-Komponenten.</p></div></div></section>
+      <section class="print-section"><h2 data-lang="en">Selected achievements</h2><h2 data-lang="de">Ausgewählte Erfolge</h2><div class="print-achievements"><div class="print-achievement"><strong data-lang="en">Telematics platform delivery</strong><strong data-lang="de">Umsetzung Telematikplattform</strong><span data-lang="en">Led hardware, software, diagnostics, cyber security, testing, and supplier-management scope.</span><span data-lang="de">Leitung von Hardware, Software, Diagnose, Cyber Security, Test und Lieferantenmanagement.</span></div><div class="print-achievement"><strong data-lang="en">Agile organization</strong><strong data-lang="de">Agile Organisation</strong><span data-lang="en">Built a virtual delivery setup involving at least 40 people in changing configurations.</span><span data-lang="de">Aufbau eines virtuellen Delivery-Setups mit mindestens 40 Personen in wechselnden Konstellationen.</span></div><div class="print-achievement"><strong data-lang="en">Controller lifecycle</strong><strong data-lang="de">Steuergeräte-Lifecycle</strong><span data-lang="en">Technical leadership from initial concept through production launch.</span><span data-lang="de">Technische Leitung von der Idee bis zur Serieneinführung.</span></div><div class="print-achievement"><strong data-lang="en">Global releases</strong><strong data-lang="de">Globale Releases</strong><span data-lang="en">Established software release management for vehicle connectivity.</span><span data-lang="de">Aufbau des Software Release Managements für Vehicle Connectivity.</span></div></div></section>
+      <section class="print-section"><h2 data-lang="en">Education</h2><h2 data-lang="de">Ausbildung</h2><div class="print-edu"><div><strong>Master of Business Administration</strong><span>International Automotive Management · Hochschule Heilbronn</span></div><div><strong>Diplom-Ingenieur</strong><span data-lang="en">Telecommunication Engineering · Hochschule Offenburg</span><span data-lang="de">Nachrichtentechnik · Hochschule Offenburg</span></div></div></section>
+      <section class="print-section"><h2 data-lang="en">Professional qualities</h2><h2 data-lang="de">Professionelle Stärken</h2><div class="print-tags" data-lang="en"><span class="print-tag">Rapid technical understanding</span><span class="print-tag">Independent & goal-oriented</span><span class="print-tag">Responsibility & initiative</span><span class="print-tag">Clear communication</span><span class="print-tag">Collaborative leadership</span><span class="print-tag">Intercultural cooperation</span></div><div class="print-tags" data-lang="de"><span class="print-tag">Schnelle technische Auffassung</span><span class="print-tag">Selbstständig & zielorientiert</span><span class="print-tag">Verantwortung & Initiative</span><span class="print-tag">Klare Kommunikation</span><span class="print-tag">Kooperative Führung</span><span class="print-tag">Interkulturelle Kooperation</span></div></section>
+      <section class="print-section"><h2 data-lang="en">Leadership approach</h2><h2 data-lang="de">Führungsansatz</h2><div class="print-columns"><p data-lang="en"><strong>Technical clarity:</strong> Translate complex customer and vehicle needs into viable work packages, priorities, and architecture decisions.</p><p data-lang="en"><strong>Inclusive execution:</strong> Align teams through transparent planning, direct feedback, and close cooperation with suppliers and stakeholders.</p><p data-lang="de"><strong>Technische Klarheit:</strong> Komplexe Kunden- und Fahrzeuganforderungen in umsetzbare Arbeitspakete, Prioritäten und Architekturentscheidungen übersetzen.</p><p data-lang="de"><strong>Gemeinsame Umsetzung:</strong> Teams durch transparente Planung, direktes Feedback und enge Zusammenarbeit mit Lieferanten und Stakeholdern ausrichten.</p></div></section>
+      <div class="print-foot"><span data-lang="en">Static resume · no contact details · no tracking</span><span data-lang="de">Statischer Lebenslauf · keine Kontaktdaten · kein Tracking</span><span>2 / 2</span></div>
     </div>
+  </div>
 
-    <!-- Experience Timeline -->
-    <h2 class="section-title" data-i18n="expHeading">Beruflicher Werdegang</h2>
-    <div class="timeline">
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const langButtons = [...document.querySelectorAll('[data-set-lang]')];
+      const titles = {
+        en: 'Dennis Schuster | Systems Architect & Engineering Leader',
+        de: 'Dennis Schuster | Systemarchitekt & Engineering-Führungskraft'
+      };
+      function setLanguage(lang, updateUrl = true) {
+        if (!['en', 'de'].includes(lang)) lang = 'en';
+        root.lang = lang;
+        document.title = titles[lang];
+        langButtons.forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.setLang === lang)));
+        if (updateUrl) {
+          const url = new URL(location.href);
+          url.searchParams.set('lang', lang);
+          history.replaceState({}, '', url);
+        }
+      }
+      langButtons.forEach(btn => btn.addEventListener('click', () => setLanguage(btn.dataset.setLang)));
+      const queryLang = new URLSearchParams(location.search).get('lang');
+      const browserLang = navigator.language && navigator.language.toLowerCase().startsWith('de') ? 'de' : 'en';
+      setLanguage(queryLang || browserLang, Boolean(queryLang));
 
-      <!-- Job 1 -->
-      <article class="card" data-categories="architecture">
-        <div class="card-header"> 
-          <div>
+      const themeButton = document.getElementById('themeToggle');
+      const savedTheme = localStorage.getItem('resume-theme');
+      const preferredDark = matchMedia('(prefers-color-scheme: dark)').matches;
+      root.dataset.theme = savedTheme || (preferredDark ? 'dark' : 'light');
+      themeButton.addEventListener('click', () => {
+        root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('resume-theme', root.dataset.theme);
+      });
+
+      document.querySelectorAll('[data-print]').forEach(button => button.addEventListener('click', () => {
+        const originalTitle = document.title;
+        document.title = `Dennis_Schuster_Resume_${root.lang.toUpperCase()}`;
+        const restoreTitle = () => { document.title = originalTitle; };
+        addEventListener('afterprint', restoreTitle, { once: true });
+        window.print();
+        setTimeout(restoreTitle, 10000);
+      }));
+
+      const details = [...document.querySelectorAll('.timeline details')];
+      const viewButtons = [...document.querySelectorAll('[data-view]')];
+      function setView(view) {
+        details.forEach((item, i) => { item.open = view === 'expanded' || i === 0; });
+        viewButtons.forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.view === view)));
+      }
+      viewButtons.forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.view)));
+
+      const reveals = [...document.querySelectorAll('.reveal')];
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+        }), { threshold: .08 });
+        reveals.forEach(el => observer.observe(el));
+      } else {
+        reveals.forEach(el => el.classList.add('visible'));
+      }
+    })();
+  </script>
+</body>
+</html>
